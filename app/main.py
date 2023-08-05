@@ -1,12 +1,12 @@
 import uvicorn
+import logging
 
-from fastapi import FastAPI, Response, Request, status
+from fastapi import FastAPI, Response, status, Depends
 from fastapi.responses import JSONResponse
 
 from app.payloads import Payload
 from app.exception_handlers import handle_internal_error
-
-import logging
+from app.dependencies.churn_prediction_model import get_churn_prediction_inference
 
 logging.basicConfig(level=logging.INFO)
 
@@ -24,12 +24,11 @@ app = create_app()
 
 @app.post("/v1/inference")
 def handle_inference(item: Payload,
-                     response: Response,
-                     request: Request,
-                     ):
+                     model=Depends(get_churn_prediction_inference)):
+
     return JSONResponse(
         status_code=status.HTTP_200_OK,
-        content={"success_status": True}
+        content={"churn_probability": model(item)[0][1]}
     )
 
 

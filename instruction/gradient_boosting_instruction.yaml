@@ -1,0 +1,29 @@
+defaults:
+  - _self_
+  - mlflow_logger: local
+  - override hydra/hydra_logging: disabled
+  - override hydra/job_logging: disabled
+
+hydra:
+  output_subdir: null
+  run:
+    dir: .
+
+input_file: data/raw/_dataset senior data scientist_ Tech Challenge - Sheet1.csv
+base_classifier:
+  _target_: sklearn.ensemble.GradientBoostingClassifier
+
+hyperparameter:
+  n_estimators: [10, 50, 100, 500]
+  max_depth: [1, 2, 3, 4, 5, 6]
+  learning_rate: [0.001, 0.01, 0.1]
+
+cv_parameter:
+  scoring: f1_macro
+  n_jobs: -1
+  refit: true
+  verbose: 2
+  cv: null
+
+n_iter: null
+random_seed: 42
