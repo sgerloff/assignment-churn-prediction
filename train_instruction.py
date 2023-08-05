@@ -4,8 +4,11 @@ import omegaconf
 import re
 import mlflow
 import sys
+import polars
 
 import churn_prediction_model
+from churn_prediction_model.feature_extraction import build_feature_columns
+from churn_prediction_model.training_handler import TrainingHandler
 
 
 def _clean_tags(tag: str) -> str:
@@ -55,8 +58,16 @@ def main(params: omegaconf.DictConfig):
     setup_mlflow(params)
     with mlflow.start_run(run_name=params.mlflow_logger.run_name) as _:
         log_run(params)
-        # Training can start ...
-        pass
+        training_data = build_feature_columns(polars.read_csv(params.input_file))
+        trainer = TrainingHandler(
+            training_data,
+            params.base_classifier,
+            random_seed=params.random_seed,
+            hyperparameter=params.hyperparameter,
+            cv_parameter=params.cv_parameter,
+            n_iter=params.n_iter
+        )
+        trainer.train()
 
 
 if __name__ == "__main__":
