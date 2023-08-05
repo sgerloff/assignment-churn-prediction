@@ -4,6 +4,7 @@ Small "quick win" data product ready to serve. Some features include:
 - Initial data exploration and model baseline in `notebooks/DataExploration_initial_investigation.ipynb`
 - Training script with configuration file instructions setup `train_instruction.py`
 - Logging training runs to mlflow (locally) train and inspect with `mlflow server --backend-store-uri ./mlflow`
+- Setup `setup.py` to easily share model code and implementations for inference 
 - FastAPI endpoint serving the trained model (see below how to start in docker)
 
 
