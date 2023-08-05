@@ -1,0 +1,3 @@
+tracking_uri: ./mlflow
+experiment: test-experiment
+run_name: null

@@ -1,0 +1,17 @@
+version: '3.7'
+x-common-variables:
+  &environment
+  PORT: 8080
+  WEB_CONCURRENCY: 1
+  MAX_WORKERS: 1
+  TIMEOUT: 600
+
+services:
+  web:
+    environment: *environment
+    image: assignment-churn-prediction
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"

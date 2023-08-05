@@ -1,0 +1,5 @@
+-r requirements_scripts.txt
+-r requirements_notebooks.txt
+-r requirements_module.txt
+-r requirements_app.txt
+-r requirements_tests.txt
