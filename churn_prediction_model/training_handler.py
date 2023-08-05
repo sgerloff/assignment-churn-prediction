@@ -10,7 +10,7 @@ import hydra
 
 from typing import Optional
 from sklearn.model_selection import train_test_split, RandomizedSearchCV, GridSearchCV
-from sklearn.calibration import CalibratedClassifierCV, CalibrationDisplay
+from sklearn.calibration import CalibrationDisplay
 from sklearn import metrics
 
 
@@ -96,7 +96,7 @@ class TrainingHandler:
 
         self.logger.info("Fit final model on whole data...")
         model_pipeline = self._fit_final_model_pipelines()
-        mlflow.sklearn.log_model(artifact_path="move_probability_clf", sk_model=model_pipeline)
+        mlflow.sklearn.log_model(artifact_path="churn_prediction_clf", sk_model=model_pipeline)
 
     def _build_train_and_test_data(self):
         train_df, test_df = train_test_split(
