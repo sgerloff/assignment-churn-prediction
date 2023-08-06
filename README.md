@@ -7,6 +7,12 @@ Small "quick win" data product ready to serve. Some features include:
 - Setup `setup.py` to easily share model code and implementations for inference 
 - FastAPI endpoint serving the trained model (see below how to start in docker)
 
+## Improvement Baseline Model
+
+In the baseline model, I have dropped the date columns all together to avoid spilling absolute time information to the model.
+The first improvement introduced by the training script is to compute new features from the date columns, which express the relative time between the date and the date of last visit.
+Introducing this feature, as well as performing a hyperparameter search, the test score improved from `~78%` to `~85%`.
+
 ### Train Scores
 ```text
               precision    recall  f1-score   support
@@ -29,6 +35,8 @@ weighted avg       0.86      0.85      0.85     40000
    macro avg       0.85      0.85      0.85     10000
 weighted avg       0.85      0.85      0.85     10000
 ```
+
+
 
 # Start Churn Prediction (FastAPI Microservice)
 ```commandline
