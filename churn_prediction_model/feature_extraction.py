@@ -11,6 +11,9 @@ def build_feature_columns(dataframe: polars.DataFrame) -> polars.DataFrame:
     dataframe = dataframe.with_columns([
         (polars.col("^*_AT$") - polars.col("LAST_VISIT_AT")).suffix("_DIFF")
     ])
+    # Drop the LAST_VISIT_AT_DIFF column as its all zero by definition
+    dataframe.drop_in_place("LAST_VISIT_AT_DIFF")
+
     # Fill null in *_AT_DIFF columns with zero
     dataframe = dataframe.with_columns([
         polars.col("^*_AT_DIFF$").fill_null(strategy="zero")
